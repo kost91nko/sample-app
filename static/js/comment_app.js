@@ -12,7 +12,7 @@ function CommentObj($http) {
   };
   this.addComment = function(rootCommentId, parentId,
                              newComment, callback){
-    $http.post('/comments/add', { rootCommentId: rootCommentId,
+   $http.post('/comments/add', { rootCommentId: rootCommentId,
                                   parentCommentId: parentId,
                                   newComment: newComment })
     .success(function(data, status, headers, config) {
@@ -46,6 +46,7 @@ app.controller('photoController', ['$scope', '$http', 'commentSrv',
           $srope.commentThread = {};
         } else {
           $scope.commentThread = comment;
+          $scope.jsonComment = angular.toJson(comment);
         }
       });
     };
@@ -99,4 +100,13 @@ app.controller('pageController', ['$scope', '$http','commentSrv',
          }
        });
      };
+
+     $scope.testPost = function(){
+         $http.post('/comments/post-test', {foo: "foo"})
+            .success(function(data, status, headers, config){
+                 $scope.testPostMsg = data.msg;
+            })
+            .error(function(data, status, headers, config) {
+            });
+     }
    }]);

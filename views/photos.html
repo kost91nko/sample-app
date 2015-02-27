@@ -26,8 +26,11 @@
              ng-include="'/static/comment_thread.html'"></div>
       </div>
     </div>
+    <textarea>{{jsonComment}}</textarea>
   </div>
   <div ng-controller="pageController">
+    <button ng-click="testPost()">Post Test</button>
+    <span ng-bind="testPostMsg"></span>
    <div id="pageComments"
           ng-init="addComment=false;replySubject='';replyBody=''">
      <div class="comment"

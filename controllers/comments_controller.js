@@ -14,10 +14,11 @@ exports.getComment = function(req, res) {
 };
 
 exports.addComment = function(req, res) {
+  console.log(req.body);
   CommentThread.findOne({ _id: req.body.rootCommentId })
   .exec(function(err, commentThread) {
     if (!commentThread){
-      res.status(404).json({msg: 'CommentThread Not Found.'});
+      res.status(404).json({msg: 'Parent CommentThread Not Found.'});
     } else {
       var newComment = new Reply({body: req.body.newComment});
       newComment.username = generateRandomUsername();
@@ -29,7 +30,7 @@ exports.addComment = function(req, res) {
 
 function addComment(req, res, commentThread, currentComment,
                     parentId, newComment){
-  if (commentThread.id == parentId){
+  if (commentThread._id == parentId){
     commentThread.replies.push(newComment);
     updateCommentThread(req, res, commentThread);
   } else {
